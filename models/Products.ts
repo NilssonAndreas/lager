@@ -10,7 +10,6 @@ const products = {
     },
 
     updateProductStock: async function updateProduct(product) {
-    
             await fetch(`${config.base_url}/products`, {
             body: JSON.stringify(product),
             headers: {
