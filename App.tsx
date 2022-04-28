@@ -4,10 +4,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Home from "./components/Home.tsx";
 import Pick from "./components/Pick.tsx";
 import Deliveries from "./components/Deliveries";
+import Auth from "./components/auth/Auth";
+import Invoices from "./components/Invoices";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Base } from './styles';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import authModel from './models/auth'
 
 
 const Tab = createBottomTabNavigator();
@@ -15,10 +18,16 @@ const routeIcons = {
   "Lager": "home",
   "Inleveranser": "document-outline",
   "Plock": "list",
+  "Faktura": "folder",
 };
 
 export default function App() {
   const [products, setProducts] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
+  useEffect(async () => {
+    setIsLoggedIn(await authModel.loggedIn() /* Vi kommer tillbaka till denna funktion. */);
+  }, []);
+
   return (
     <SafeAreaView style={Base.container}>
       <NavigationContainer>
@@ -41,6 +50,14 @@ export default function App() {
           <Tab.Screen name="Plock">
             {() => <Pick products={products} setProducts={setProducts} />}
           </Tab.Screen>
+          {isLoggedIn ?
+          <Tab.Screen name="Faktura">
+            {() => <Invoices setIsLoggedIn={setIsLoggedIn} />}
+          </Tab.Screen> :
+          <Tab.Screen name="Logga in">
+            {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
+          </Tab.Screen>
+        }
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />

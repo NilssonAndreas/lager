@@ -31,6 +31,14 @@ export const button1 = {
     lineHeight: 1.4,
 }
 
+export const picker = {
+    backgroundColor: '#fff',
+}
+
+export const datepicker = {
+    marginTop: 5,
+}
+
 // color: 'grey',
 //     backgroundColor: '#fff',
 //     

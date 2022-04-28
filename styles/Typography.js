@@ -39,3 +39,10 @@ export const listHead = {
     textDecorationLine: 'underline',
     marginBottom: 7,
 }
+
+export const form = {
+    color: 'black',
+    fontSize: 18,
+    marginBottom: 6,
+    marginTop: 6,
+};
