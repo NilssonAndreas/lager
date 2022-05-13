@@ -60,6 +60,15 @@ const orders = {
             console.log("update complete")
         });
 
+    },
+
+    shippingInfo: function shippingInfo(order: Partial<Order>) {
+        let itemsToDeliver = ""
+        for ( let item of order.order_items) {
+            itemsToDeliver += `${item.name} - ${item.amount}st |  ` 
+
+        };
+        return itemsToDeliver.slice(0, -3)
     }
 };
 

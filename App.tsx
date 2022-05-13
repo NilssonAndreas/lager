@@ -5,6 +5,7 @@ import Home from "./components/Home.tsx";
 import Pick from "./components/Pick.tsx";
 import Deliveries from "./components/Deliveries";
 import Auth from "./components/auth/Auth";
+import Ship from "./components/ship/Ship";
 import Invoices from "./components/Invoices";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -41,6 +42,7 @@ export default function App() {
           tabBarInactiveTintColor: 'gray',
         })}
         >
+           
           <Tab.Screen name="Lager">
             {() => <Home products={products} setProducts={setProducts} />}
           </Tab.Screen>
@@ -50,6 +52,7 @@ export default function App() {
           <Tab.Screen name="Plock">
             {() => <Pick products={products} setProducts={setProducts} />}
           </Tab.Screen>
+          <Tab.Screen name='Skicka' component={Ship} />
           {isLoggedIn ?
           <Tab.Screen name="Faktura">
             {() => <Invoices setIsLoggedIn={setIsLoggedIn} />}
@@ -57,6 +60,8 @@ export default function App() {
           <Tab.Screen name="Logga in">
             {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
           </Tab.Screen>
+          
+
         }
         </Tab.Navigator>
       </NavigationContainer>
