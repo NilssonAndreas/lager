@@ -10,7 +10,7 @@ import productModel from "../models/Products";
 import deliveryModel from "../models/deliveries"
 
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import { showMessage } from "react-native-flash-message";
 
 function DateDropDown(props) {
     const [dropDownDate, setDropDownDate] = useState<Date>(new Date());
@@ -77,17 +77,26 @@ async function addDelivery(delivery, currentProduct, navigation) {
         api_key: config.api_key,
     }
 
-    await deliveryModel.addDelivery(deliveryDetails);
-
-    const updatedProduct = {
-        id: currentProduct.id,
-        name: currentProduct.name,
-        stock: (currentProduct.stock || 0) + (delivery.amount || 0),
-        api_key: config.api_key
+    const result = await deliveryModel.addDelivery(deliveryDetails);
+    if (result.type === "success") {
+        const updatedProduct = {
+            id: currentProduct.id,
+            name: currentProduct.name,
+            stock: (currentProduct.stock || 0) + (delivery.amount || 0),
+            api_key: config.api_key
+        };
+        await productModel.updateProductStock(updatedProduct);
+        navigation.navigate("List", { reload: true });
+    } else {
+        showMessage({
+            message: result.title,
+            description: result.message,
+            type: result.type,
+        });
+    
     };
-    await productModel.updateProductStock(updatedProduct);
-
-    navigation.navigate("List", { reload: true });
+    
+    
 }
 
 export default function DeliveryForm({ navigation }) {

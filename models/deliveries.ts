@@ -11,18 +11,30 @@ const Deliveries = {
     },
 
     addDelivery: async function addDelivery(deliveryToUpdate) {
-        await fetch(`${config.base_url}/deliveries`, {
+
+        const response = await fetch(`${config.base_url}/deliveries`, {
             body: JSON.stringify(deliveryToUpdate),
             headers: {
             'content-type': 'application/json'
             },
             method: 'POST'
         })
-        .then(function (response) {
-            console.log("Added Delivery")
-        });
-
+        
+        const result = await response.json();
+        if (result.errors) {
+            return {
+                title: result.errors.title,
+                message: result.errors.detail,
+                type: "danger",
+            };
+        }
+        return {
+            title: "Skickad",
+            message: result.data.message,
+            type: "success",
+        };
     }
+
 }
 
 export default Deliveries;

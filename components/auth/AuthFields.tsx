@@ -24,7 +24,7 @@ export default function AuthFields({ auth, setAuth, title, submit, navigation}) 
                 secureTextEntry={true}
             />
             <Button
-                title={title}
+                title={"Logga in"}
                 onPress={() => {
                     submit();
                 }}
@@ -35,7 +35,8 @@ export default function AuthFields({ auth, setAuth, title, submit, navigation}) 
                     onPress={() => {
                         navigation.navigate("Register");
                     }}
-                />
+                >
+                </Button>
             }
         </View>
     );

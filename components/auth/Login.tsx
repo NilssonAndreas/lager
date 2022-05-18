@@ -2,6 +2,7 @@ import Auth from '../../interfaces/auth';
 import { useState } from 'react';
 import AuthModel from '../../models/auth';
 import AuthFields from './AuthFields';
+import { showMessage } from "react-native-flash-message";
 
 export default function Login({navigation, setIsLoggedIn}) {
     const [auth, setAuth] = useState<Partial<Auth>>({});
@@ -9,12 +10,21 @@ export default function Login({navigation, setIsLoggedIn}) {
     async function doLogin() {
         if (auth.email && auth.password) {
             // Snart återkommer vi till AuthModel :)
-            try {
                 const result = await AuthModel.login(auth.email, auth.password);
-                setIsLoggedIn(true);
-            } catch (error) {
-                alert("Fel användarnamn eller lösenord")
-            }
+                if (result.type === "success") {
+                    setIsLoggedIn(true);
+                }
+                showMessage({
+                    message: result.title,
+                    description: result.message,
+                    type: result.type,
+                });
+        } else {
+            showMessage({
+                message: "Saknas",
+                description: "E-post eller lösenord saknas",
+                type: "warning",
+            });
         }
     }
 

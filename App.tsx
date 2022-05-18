@@ -12,7 +12,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Base } from './styles';
 import { useState, useEffect } from 'react';
 import authModel from './models/auth'
-
+import FlashMessage from 'react-native-flash-message';
 
 const Tab = createBottomTabNavigator();
 const routeIcons = {
@@ -20,6 +20,7 @@ const routeIcons = {
   "Inleveranser": "document-outline",
   "Plock": "list",
   "Faktura": "folder",
+  "Skicka": "map",
 };
 
 export default function App() {
@@ -66,6 +67,7 @@ export default function App() {
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
+      <FlashMessage position="top" />
     </SafeAreaView>
   );
 }
